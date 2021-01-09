@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <md-toolbar md-elevation="1">
       <router-link class="nav-item" to="/"><img alt="helloprint" src="./assets/hp.svg"></router-link>
       <router-link class="nav-item" to="/add">Add New Mask</router-link>
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'App'
   }
@@ -28,7 +26,7 @@
     font-family: $montserrat;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+
     color: #2c3e50;
 
     .nav-item{

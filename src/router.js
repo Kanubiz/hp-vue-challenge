@@ -6,16 +6,15 @@ import AddMask from './components/AddMask.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Masks',
-      component: Masks
-    },    
-    {
-      path: '/add',
-      name: 'AddMasks',
-      component: AddMask
-    }
-  ]
+    routes: [{
+            path: '/',
+            name: 'Masks',
+            component: Masks
+        },
+        {
+            path: '/add',
+            name: 'AddMasks',
+            component: AddMask
+        }
+    ]
 })

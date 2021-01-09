@@ -11,7 +11,7 @@
 <script>
 import { mapGetters, mapActions} from  'vuex'
 export default {
-    name: 'Todos',
+    name: 'Masks',
     computed: mapGetters(['allTodos']),
     methods: {
         ...mapActions(['fetchTodos'])

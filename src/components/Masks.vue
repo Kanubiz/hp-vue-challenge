@@ -1,5 +1,6 @@
 <template>
     <div>
+        <FilterMasks/>
         <div class="masks">
             <div class="mask" v-for="todo in allTodos" v-bind:key="todo.id">
                 {{todo.title}}
@@ -13,12 +14,12 @@
 </template>
 
 <script>
-    import {
-        mapGetters,
-        mapActions
-    } from 'vuex'
+    import {mapGetters,mapActions} from 'vuex'
+    import FilterMasks from './FilterMasks.vue'
+    
     export default {
         name: 'Masks',
+        components: {FilterMasks},
         computed: mapGetters(['allTodos']),
         methods: {
             ...mapActions(['fetchTodos', 'deleteTodo'])

@@ -30,13 +30,17 @@ const actions = {
         await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
         commit('removeTodo', id)
     },
-    async filterTodos({ commit}, _limit){
+    async filterTodos({
+        commit
+    }, _limit) {
         const limit = parseInt(_limit)
         const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`)
         commit('setTodos', response.data)
     },
 
-    async updateTodo({commit}, updTodo){
+    async updateTodo({
+        commit
+    }, updTodo) {
         const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo)
         commit('updateTodo', response.data)
     }
@@ -47,7 +51,7 @@ const mutations = {
     removeTodo: (state, id) => (state.todos = state.todos.filter(todo => todo.id !== id)),
     updateTodo: (state, updTodo) => {
         const index = state.todos.findIndex(todo => todo.id === updTodo.id)
-        if(index !== -1){
+        if (index !== -1) {
             state.todos.splice(index, 1, updTodo)
         }
     }

@@ -1,58 +1,58 @@
 import axios from 'axios'
 
 const state = {
-    todos: []
+    masks: []
 };
 
 const getters = {
-    allTodos: (state) => state.todos
+    allMasks: (state) => state.masks
 };
 
 const actions = {
-    async fetchTodos({
+    async fetchMasks({
         commit
     }) {
         const response = await axios.get('https://jsonplaceholder.typicode.com/todos')
-        commit('setTodos', response.data)
+        commit('setMasks', response.data)
     },
-    async addTodo({
+    async addMask({
         commit
     }, title) {
         const response = await axios.post('https://jsonplaceholder.typicode.com/todos', {
             title,
             completed: false
         })
-        commit('newTodo', response.data)
+        commit('newMask', response.data)
     },
-    async deleteTodo({
+    async deleteMask({
         commit
     }, id) {
         await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        commit('removeTodo', id)
+        commit('removeMask', id)
     },
-    async filterTodos({
+    async filterMasks({
         commit
     }, _limit) {
         const limit = parseInt(_limit)
         const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`)
-        commit('setTodos', response.data)
+        commit('setMasks', response.data)
     },
 
-    async updateTodo({
+    async updateMask({
         commit
-    }, updTodo) {
-        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo)
-        commit('updateTodo', response.data)
+    }, updMask) {
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updMask.id}`, updMask)
+        commit('updateMask', response.data)
     }
 };
 const mutations = {
-    setTodos: (state, todos) => (state.todos = todos),
-    newTodo: (state, todo) => state.todos.unshift(todo),
-    removeTodo: (state, id) => (state.todos = state.todos.filter(todo => todo.id !== id)),
-    updateTodo: (state, updTodo) => {
-        const index = state.todos.findIndex(todo => todo.id === updTodo.id)
+    setMasks: (state, masks) => (state.masks = masks),
+    newMask: (state, mask) => state.masks.unshift(mask),
+    removeMask: (state, id) => (state.masks = state.masks.filter(mask => mask.id !== id)),
+    updateMask: (state, updMask) => {
+        const index = state.masks.findIndex(mask => mask.id === updMask.id)
         if (index !== -1) {
-            state.todos.splice(index, 1, updTodo)
+            state.masks.splice(index, 1, updMask)
         }
     }
 };

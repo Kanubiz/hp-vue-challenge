@@ -1,7 +1,7 @@
 <template>
     <div class="add">
         <form @submit="onSubmit">
-            <input type="text" v-model="title" placeholder="Add todos">
+            <input type="text" v-model="title" placeholder="Add masks">
             <input type="submit" value="Submit">
         </form>
     </div>
@@ -12,12 +12,12 @@
         mapActions
     } from 'vuex'
     export default {
-        name: 'AddTodos',
+        name: 'AddMasks',
         methods: {
-            ...mapActions(['addTodo']),
+            ...mapActions(['addMask']),
             onSubmit(e) {
                 e.preventDefault();
-                this.addTodo(this.title)
+                this.addMask(this.title)
             }
         },
         data() {
@@ -29,13 +29,13 @@
 </script>
 
 <style>
-    .todos {
+    .masks {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 1rem;
     }
 
-    .todo {
+    .mask {
         padding: 1rem;
         border-radius: 5px;
         text-align: center;

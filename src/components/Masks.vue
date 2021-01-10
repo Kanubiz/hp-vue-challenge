@@ -8,9 +8,9 @@
             </div>
         <div class="masks">
 
-            <div @dblclick="onDblClick(todo)" class="mask" v-for="todo in allTodos" v-bind:key="todo.id" v-bind:class="{'is-complete':todo.completed}">
-                {{todo.title}}
-                <span class="delete" v-on:click="deleteTodo(todo.id)">
+            <div @dblclick="onDblClick(mask)" class="mask" v-for="mask in allMasks" v-bind:key="mask.id" v-bind:class="{'is-complete':mask.completed}">
+                {{mask.title}}
+                <span class="delete" v-on:click="deleteMask(mask.id)">
                     <md-icon>delete_forever</md-icon>
                 </span>
 
@@ -26,20 +26,20 @@
     export default {
         name: 'Masks',
         components: {FilterMasks},
-        computed: mapGetters(['allTodos']),
+        computed: mapGetters(['allMasks']),
         methods: {
-            ...mapActions(['fetchTodos', 'deleteTodo', 'updateTodo']),
-            onDblClick(todo){
-                const updTodo = {
-                    id: todo.id,
-                    title: todo.title,
-                    completed: !todo.completed
+            ...mapActions(['fetchMasks', 'deleteMask', 'updateMask']),
+            onDblClick(mask){
+                const updMask = {
+                    id: mask.id,
+                    title: mask.title,
+                    completed: !mask.completed
                 }
-                this.updateTodo(updTodo)
+                this.updateMask(updMask)
             }
         },
         created() {
-            this.fetchTodos()
+            this.fetchMasks()
         }
     }
 </script>

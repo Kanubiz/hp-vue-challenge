@@ -11,49 +11,48 @@ const getters = {
 const actions = {
     async fetchMasks({
         commit
-    }) {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos')
-        commit('setMasks', response.data)
+    }, limit=10) {
+        const response = await axios.get('https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks')
+        var masks = response.data.slice(0, limit)
+        commit('setMasks', masks)
     },
     async addMask({
         commit
     }, title) {
-        const response = await axios.post('https://jsonplaceholder.typicode.com/todos', {
+        const response = await axios.post('https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks', 
+        {
             title,
-            completed: false
+            completed: false,
+            
         })
         commit('newMask', response.data)
     },
     async deleteMask({
         commit
-    }, id) {
-        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        commit('removeMask', id)
-    },
-    async filterMasks({
-        commit
-    }, _limit) {
-        const limit = parseInt(_limit)
-        const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`)
-        commit('setMasks', response.data)
+    }, mask) {
+        await axios.delete(`https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks/${mask._id}`)
+        commit('removeMask', mask)
     },
 
     async updateMask({
         commit
     }, updMask) {
-        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updMask.id}`, updMask)
-        commit('updateMask', response.data)
+        const cloneMask = JSON.parse(JSON.stringify(updMask));
+        const id = cloneMask._id;
+        delete cloneMask._id;
+        await axios.put(`https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks/${id}`, cloneMask)
+        commit('updateMask', updMask)
     }
 };
 const mutations = {
     setMasks: (state, masks) => (state.masks = masks),
     newMask: (state, mask) => state.masks.unshift(mask),
-    removeMask: (state, id) => (state.masks = state.masks.filter(mask => mask.id !== id)),
+    removeMask: (state, delMask) => (state.masks = state.masks.filter(mask => delMask._id !== mask._id)),
     updateMask: (state, updMask) => {
-        const index = state.masks.findIndex(mask => mask.id === updMask.id)
-        if (index !== -1) {
-            state.masks.splice(index, 1, updMask)
-        }
+        const index = state.masks.findIndex(mask => mask._id === updMask._id);
+        if(index !== -1) {
+            state.masks.splice(index, 1, updMask);
+        }     
     }
 };
 

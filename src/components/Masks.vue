@@ -10,7 +10,7 @@
 
             <div @dblclick="onDblClick(mask)" class="mask" v-for="mask in allMasks" v-bind:key="mask.id" v-bind:class="{'is-complete':mask.completed}">
                 {{mask.title}}
-                <span class="delete" v-on:click="deleteMask(mask.id)">
+                <span class="delete" v-on:click="deleteMask(mask)">
                     <md-icon>delete_forever</md-icon>
                 </span>
 
@@ -31,7 +31,7 @@
             ...mapActions(['fetchMasks', 'deleteMask', 'updateMask']),
             onDblClick(mask){
                 const updMask = {
-                    id: mask.id,
+                    _id: mask._id,
                     title: mask.title,
                     completed: !mask.completed
                 }

@@ -16,14 +16,8 @@
             <div class="md-layout-item">
                 <md-field id='number-field'>
                     <label for="number">Show:</label>
-                    <md-select v-model="number" name="number" id="number" placeholder="Show: 200"
-                        @md-selected="filterTodos(number)">
-                        <md-option value="200">200</md-option>
-                        <md-option value="100">100</md-option>
-                        <md-option value="50">50</md-option>
-                        <md-option value="20">20</md-option>
-                        <md-option value="10">10</md-option>
-
+                    <md-select v-model="limit" name="number" id="number" placeholder="Show: 200" @md-selected="filterTodos(limit)">
+                        <md-option  v-for="number in limits" :key="number" :value="number">{{number}}</md-option>
                     </md-select>
                 </md-field>
             </div>
@@ -39,7 +33,8 @@
         name: 'FilterMasks',
         methods: mapActions(['filterTodos']),
         data: () => ({
-            number: '200',
+            limit: '200',
+            limits: [200, 100, 50, 20, 10],
             filter: null
         })
     }

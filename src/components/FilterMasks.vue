@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="md-layout md-gutter">
-
             <div class="md-layout-item">
                 <md-field id="filter-field">
                     <label for="filter">Filter by:</label>

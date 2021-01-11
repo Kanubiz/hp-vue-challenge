@@ -3,12 +3,10 @@
     <md-toolbar md-elevation="1">
       <router-link class="nav-item" to="/"><img alt="helloprint" src="./assets/hp.svg"></router-link>
       <router-link class="nav-item" to="/add">Add a new mask</router-link>
-
     </md-toolbar>
     <md-content class="md-transparent">
       <router-view />
     </md-content>
-
   </div>
 </template>
 
@@ -19,16 +17,21 @@
 </script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-  $montserrat: 'Montserrat';
+  @import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+  @include md-register-theme("default", (
+      primary: #004B78, // The primary color of your brand
+      accent: #F11A1A // The secondary color of your brand
+    ));
+
+  @import "~vue-material/dist/theme/all";
 
   #app {
-    font-family: $montserrat;
+    font-family: Open Sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    color: #2c3e50;
 
     .nav-item {
       &:nth-of-type(1) {

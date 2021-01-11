@@ -5,11 +5,11 @@
 
         <div class="md-layout">
           <div class="md-layout-item md-small-size-100">
-            <md-field md-clearable :class="getValidationClass('title')">
-              <label for="title">Title</label>
-              <md-input name="title" id="title" v-model="form.title"/>
-              <span class="md-error" v-if="!$v.form.title.required">The title is required</span>
-              <span class="md-error" v-else-if="!$v.form.title.minlength">Invalid title</span>
+            <md-field md-clearable :class="getValidationClass('name')">
+              <label for="name">Name your Mask</label>
+              <md-input name="name" id="name" v-model="form.name"/>
+              <span class="md-error" v-if="!$v.form.name.required">The name is required</span>
+              <span class="md-error" v-else-if="!$v.form.name.minlength">Invalid name</span>
             </md-field>
           </div>
         </div>
@@ -31,7 +31,7 @@
 
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
-            <strong for="color">Color</strong>
+            <label for="color">Color</label>
             <md-field id="color-field" :class="getValidationClass('color')">
               <v-swatches v-model="form.color" inline></v-swatches>
             </md-field>
@@ -60,6 +60,7 @@
       </md-card-content>
 
       <md-card-actions>
+        <md-button class="md-raised md-secondary" @click="clearForm">Reset</md-button>
         <md-button class="md-raised md-primary">Upload Mask</md-button>
       </md-card-actions>
 
@@ -86,7 +87,7 @@ import 'vue-swatches/dist/vue-swatches.css'
      components: { VSwatches, Uploader},
     data: () => ({
       form: {
-        title: null,
+        name: null,
         price: null,
         vat: false,
         tags: [],
@@ -99,7 +100,7 @@ import 'vue-swatches/dist/vue-swatches.css'
     }),
     validations: {
       form: {
-        title: {
+        name: {
           required,
           minLength: minLength(3)
         },
@@ -128,19 +129,21 @@ import 'vue-swatches/dist/vue-swatches.css'
         }
       },
       addTag(tag){
-          if(!this.form.tags.filter(t => t === tag)[0]){
-            this.form.tags.push(tag)
-            let removeIndex = this.recTags.findIndex(x => x === tag)
-            this.recTags.splice(removeIndex, 1)
-          }
+        if(!this.form.tags.filter(t => t === tag)[0]){
+          this.form.tags.push(tag)
+          let removeIndex = this.recTags.findIndex(x => x === tag)
+          this.recTags.splice(removeIndex, 1)
+        }
       },
       clearForm () {
         this.$v.$reset()
-        this.form.title = null
+        this.form.name = null
         this.form.price = null
         this.form.color = null
         this.form.tags = []
-        this.form.image = null
+        this.form.vat = false
+        this.recTags= ["Biodegradable", "N95 Filter", "Elastic Ear Bands", "Nose piece"]
+        this.form.image = []
       },
     },
 
@@ -154,15 +157,10 @@ import 'vue-swatches/dist/vue-swatches.css'
   display: flex;
   justify-content: center;
   margin-top:4px;
-  strong{
-    color:#004B78;
-  }
+
   .vux-uploader{
     width: 100%;
     padding: 0;
-    .vux-uploader_title{
-      color:#004B78 !important;
-    }
   }
 }
 

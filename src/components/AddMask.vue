@@ -61,7 +61,7 @@
 
       <md-card-actions>
         <md-button class="md-raised md-secondary" @click="clearForm">Reset</md-button>
-        <md-button class="md-raised md-primary">Upload Mask</md-button>
+        <md-button class="md-raised md-primary" @click="validateForm">Upload Mask</md-button>
       </md-card-actions>
 
     </md-card>
@@ -134,6 +134,28 @@ import 'vue-swatches/dist/vue-swatches.css'
           let removeIndex = this.recTags.findIndex(x => x === tag)
           this.recTags.splice(removeIndex, 1)
         }
+      },
+      async validateForm() {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          await this.uploadMask()
+        }
+      },      
+      async uploadMask() {
+        let images = []
+        for (let image of this.form.image) {
+          images.push(image.url)
+        }
+        let mask = {
+          color: this.form.color,
+          image: images,
+          name: this.form.name,
+          price: this.form.price,
+          tags: this.form.tags,
+          vat: this.form.vat
+        }
+        await this.addMask(mask);
+        this.$router.push('/');
       },
       clearForm () {
         this.$v.$reset()

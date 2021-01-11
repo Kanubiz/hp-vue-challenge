@@ -18,13 +18,9 @@ const actions = {
     },
     async addMask({
         commit
-    }, title) {
-        const response = await axios.post('https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks', 
-        {
-            title,
-            completed: false,
-            
-        })
+    }, mask) {
+        mask.date = new Date()
+        const response = await axios.post('https://crudcrud.com/api/7c52af33b54f4f74ab57d04683679d2c/masks',mask)
         commit('newMask', response.data)
     },
     async deleteMask({

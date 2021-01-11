@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="allMasks.length>0">
         <FilterMasks/>
                     <div class="legend">
                 <span>Double click to mark as complete</span>
@@ -16,6 +16,9 @@
 
             </div>
         </div>
+    </div>
+    <div v-else>
+        <span>no masks</span>
     </div>
 </template>
 

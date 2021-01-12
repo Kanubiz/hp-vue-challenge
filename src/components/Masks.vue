@@ -48,7 +48,7 @@
       }
 
       100% {
-          -webkit-transform: translateY(-0.4em);
+          -webkit-transform: translateY(-0.9em);
           opacity: 0.9
       }
   }

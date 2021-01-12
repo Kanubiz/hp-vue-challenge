@@ -40,8 +40,8 @@
 
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
-            <md-chips v-model="form.tags" :md-limit="10" md-placeholder="Add tags to make your mask easier to find!">
-              <div class="md-helper-text">Up to 10 tags</div>
+            <md-chips v-model="form.tags" :md-limit="9" md-placeholder="Add tags to make your mask easier to find!">
+              <div class="md-helper-text">Up to 9 tags</div>
             </md-chips>
             <span>Recommended Tags: </span>
             <md-chip v-for="recTag in recTags" :key="recTag" class="md-primary" md-clickable v-model="recTags"
@@ -49,13 +49,23 @@
           </div>
         </div>
 
-        <div class="md-layout md-gutter">
+          <div class="md-layout-item md-small-size-100">
+            <md-field md-clearable :class="getValidationClass('image')">
+              <label for="image">Image link</label>
+              <md-input name="image" id="image" v-model="form.image"/>
+              <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
+              <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
+            </md-field>
+          </div>
+
+        <!-- <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-100">
             <md-field>
               <uploader v-model="form.image" :autoUpload="false" :title="'Upload Images'" :limit="10"></uploader>
+              <input type="file" @change="onFileChanged">
             </md-field>
           </div>
-        </div>
+        </div> -->
 
       </md-card-content>
 
@@ -72,29 +82,32 @@
   import { validationMixin } from 'vuelidate'
   import { mapActions } from 'vuex';
 import VSwatches from 'vue-swatches'
-  import Uploader from "vux-uploader-component";
+  // import Uploader from "vux-uploader-component";
 import 'vue-swatches/dist/vue-swatches.css'
   import {
     required,
     minLength,
     decimal,
+    url,
     minValue
   } from 'vuelidate/lib/validators'
 
   export default {
     name: 'AddMask',
     mixins: [validationMixin],
-     components: { VSwatches, Uploader},
+     components: { VSwatches, 
+    //  Uploader
+     },
     data: () => ({
       form: {
         name: null,
         price: null,
         vat: false,
         tags: [],
-        image: [],
+        image: null,
         color: null
       },
-      recTags: ["Biodegradable", "N95 Filter", "Elastic Ear Bands", "Nose piece"],
+      recTags: ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"],
       userSaved: false,
       lastUser: null
     }),
@@ -114,6 +127,10 @@ import 'vue-swatches/dist/vue-swatches.css'
         },
         color: {
           required,
+        },
+        image: {
+          required,
+          url
         }
       }
     },
@@ -142,19 +159,19 @@ import 'vue-swatches/dist/vue-swatches.css'
         }
       },      
       async uploadMask() {
-        let images = []
-        for (let image of this.form.image) {
-          images.push(image.url)
-        }
-        let mask = {
-          color: this.form.color,
-          image: images,
-          name: this.form.name,
-          price: this.form.price,
-          tags: this.form.tags,
-          vat: this.form.vat
-        }
-        await this.addMask(mask);
+        // let images = []
+        // for (let image of this.form.image) {
+        //   images.push(image.blob)
+        // }
+        // let mask = {
+        //   color: this.form.color,
+        //   image: images,
+        //   name: this.form.name,
+        //   price: this.form.price,
+        //   tags: this.form.tags,
+        //   vat: this.form.vat
+        // }
+        await this.addMask(this.form);
         this.$router.push('/');
       },
       clearForm () {
@@ -164,8 +181,8 @@ import 'vue-swatches/dist/vue-swatches.css'
         this.form.color = null
         this.form.tags = []
         this.form.vat = false
-        this.recTags= ["Biodegradable", "N95 Filter", "Elastic Ear Bands", "Nose piece"]
-        this.form.image = []
+        this.recTags= ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
+        this.form.image = null
       },
     },
 

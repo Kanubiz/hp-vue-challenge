@@ -27,7 +27,7 @@
     ));
 
   @import "~vue-material/dist/theme/all";
-
+  @import "./styles/_variables.scss";
   #app {
     font-family: Open Sans;
     -webkit-font-smoothing: antialiased;
@@ -41,11 +41,11 @@
       &:nth-of-type(2) {
         margin-top: 10px;
 
-        color: #004B78;
+        color: $hp-blue;
         font-weight: bold;
 
         &:hover {
-          color: #F11A1A;
+          color: $hp-red;
         }
 
         &.router-link-active {

@@ -1,42 +1,29 @@
 <template>
-    <div>
-        <FilterMasks/>
-                    <div class="legend">
-                <span>Double click to mark as complete</span>
-                <span ><span class="incomplete-box"></span> = Incomplete</span>
-                <span ><span class="complete-box"></span> = Complete</span>
-            </div>
+    <div v-if="allMasks.length>0">
+        <FilterMasks />
         <div class="masks">
-
-            <div @dblclick="onDblClick(mask)" class="mask" v-for="mask in allMasks" v-bind:key="mask.id" v-bind:class="{'is-complete':mask.completed}">
-                {{mask.title}}
-                <span class="delete" v-on:click="deleteMask(mask)">
-                    <md-icon>delete_forever</md-icon>
-                </span>
-
-            </div>
+            <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask' />
         </div>
+    </div>
+    <div v-else>
+        <span>no masks</span>
     </div>
 </template>
 
 <script>
     import {mapGetters,mapActions} from 'vuex'
     import FilterMasks from './FilterMasks.vue'
+    import MaskItem from './MaskItem.vue'
     
     export default {
         name: 'Masks',
-        components: {FilterMasks},
+        components: {
+            FilterMasks,
+            MaskItem
+        },
         computed: mapGetters(['allMasks']),
         methods: {
-            ...mapActions(['fetchMasks', 'deleteMask', 'updateMask']),
-            onDblClick(mask){
-                const updMask = {
-                    _id: mask._id,
-                    title: mask.title,
-                    completed: !mask.completed
-                }
-                this.updateMask(updMask)
-            }
+            ...mapActions(['fetchMasks']),
         },
         created() {
             this.fetchMasks()
@@ -47,40 +34,8 @@
 <style lang="scss" scoped>
     .masks {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         grid-gap: 1rem;
-    }
-
-    .mask {
-        padding: 1rem;
-        border-radius: 5px;
-        text-align: center;
-        position: relative;
-        background: #41b883;
-        &.is-complete{
-            background: #35495e;
-        }
-
-    }
-
-    .md-icon {
-        cursor: pointer;
-    }
-    .legend{
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 1rem;
-    }
-    .complete-box{
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #35495e;
-    }    
-    .incomplete-box{
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #41b883;
+        margin-left: 2%;
     }
 </style>

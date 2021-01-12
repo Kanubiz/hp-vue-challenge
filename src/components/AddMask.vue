@@ -5,11 +5,11 @@
 
         <div class="md-layout">
           <div class="md-layout-item md-small-size-100">
-            <md-field md-clearable :class="getValidationClass('title')">
-              <label for="title">Title</label>
-              <md-input name="title" id="title" v-model="form.title"/>
-              <span class="md-error" v-if="!$v.form.title.required">The title is required</span>
-              <span class="md-error" v-else-if="!$v.form.title.minlength">Invalid title</span>
+            <md-field md-clearable :class="getValidationClass('name')">
+              <label for="name">Name your Mask</label>
+              <md-input name="name" id="name" v-model="form.name" />
+              <span class="md-error" v-if="!$v.form.name.required">The name is required</span>
+              <span class="md-error" v-else-if="!$v.form.name.minlength">Invalid name</span>
             </md-field>
           </div>
         </div>
@@ -19,7 +19,7 @@
             <md-field md-clearable :class="getValidationClass('price')">
               <label for="price">Price</label>
               <span class="md-prefix">€</span>
-              <md-input name="price" id="price" v-model="form.price"/>
+              <md-input name="price" id="price" v-model="form.price" />
               <span class="md-error" v-if="!$v.form.price.required">The price is required</span>
               <span class="md-error" v-else-if="!$v.form.price.minlength">Invalid price</span>
             </md-field>
@@ -31,7 +31,7 @@
 
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
-            <strong for="color">Color</strong>
+            <label for="color">Color</label>
             <md-field id="color-field" :class="getValidationClass('color')">
               <v-swatches v-model="form.color" inline></v-swatches>
             </md-field>
@@ -40,8 +40,8 @@
 
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
-            <md-chips v-model="form.tags" :md-limit="10" md-placeholder="Add tags to make your mask easier to find!">
-              <div class="md-helper-text">Up to 10 tags</div>
+            <md-chips v-model="form.tags" :md-limit="9" md-placeholder="Add tags to make your mask easier to find!">
+              <div class="md-helper-text">Up to 9 tags</div>
             </md-chips>
             <span>Recommended Tags: </span>
             <md-chip v-for="recTag in recTags" :key="recTag" class="md-primary" md-clickable v-model="recTags"
@@ -49,18 +49,29 @@
           </div>
         </div>
 
-        <div class="md-layout md-gutter">
+        <div class="md-layout-item md-small-size-100">
+          <md-field md-clearable :class="getValidationClass('image')">
+            <label for="image">Image link</label>
+            <md-input name="image" id="image" v-model="form.image" />
+            <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
+            <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
+          </md-field>
+        </div>
+
+        <!-- <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-100">
             <md-field>
               <uploader v-model="form.image" :autoUpload="false" :title="'Upload Images'" :limit="10"></uploader>
+              <input type="file" @change="onFileChanged">
             </md-field>
           </div>
-        </div>
+        </div> -->
 
       </md-card-content>
 
       <md-card-actions>
-        <md-button class="md-raised md-primary">Upload Mask</md-button>
+        <md-button class="md-raised md-secondary" @click="clearForm">Reset</md-button>
+        <md-button class="md-raised md-primary" @click="validateForm">Upload Mask</md-button>
       </md-card-actions>
 
     </md-card>
@@ -70,36 +81,34 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { mapActions } from 'vuex';
-import VSwatches from 'vue-swatches'
-  import Uploader from "vux-uploader-component";
-import 'vue-swatches/dist/vue-swatches.css'
-  import {
-    required,
-    minLength,
-    decimal,
-    minValue
-  } from 'vuelidate/lib/validators'
+  import VSwatches from 'vue-swatches'
+  // import Uploader from "vux-uploader-component";
+  import 'vue-swatches/dist/vue-swatches.css'
+  import {required, minLength, decimal, url, minValue} from 'vuelidate/lib/validators'
 
   export default {
     name: 'AddMask',
     mixins: [validationMixin],
-     components: { VSwatches, Uploader},
+    components: {
+      VSwatches,
+      //  Uploader
+    },
     data: () => ({
       form: {
-        title: null,
+        name: null,
         price: null,
         vat: false,
         tags: [],
-        image: [],
+        image: null,
         color: null
       },
-      recTags: ["Biodegradable", "N95 Filter", "Elastic Ear Bands", "Nose piece"],
+      recTags: ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"],
       userSaved: false,
       lastUser: null
     }),
     validations: {
       form: {
-        title: {
+        name: {
           required,
           minLength: minLength(3)
         },
@@ -113,12 +122,16 @@ import 'vue-swatches/dist/vue-swatches.css'
         },
         color: {
           required,
+        },
+        image: {
+          required,
+          url
         }
       }
     },
     methods: {
       ...mapActions(['addMask']),
-      getValidationClass (fieldName) {
+      getValidationClass(fieldName) {
         const field = this.$v.form[fieldName]
 
         if (field) {
@@ -127,19 +140,43 @@ import 'vue-swatches/dist/vue-swatches.css'
           }
         }
       },
-      addTag(tag){
-          if(!this.form.tags.filter(t => t === tag)[0]){
-            this.form.tags.push(tag)
-            let removeIndex = this.recTags.findIndex(x => x === tag)
-            this.recTags.splice(removeIndex, 1)
-          }
+      addTag(tag) {
+        if (!this.form.tags.filter(t => t === tag)[0]) {
+          this.form.tags.push(tag)
+          let removeIndex = this.recTags.findIndex(x => x === tag)
+          this.recTags.splice(removeIndex, 1)
+        }
       },
-      clearForm () {
+      async validateForm() {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          await this.uploadMask()
+        }
+      },
+      async uploadMask() {
+        // let images = []
+        // for (let image of this.form.image) {
+        //   images.push(image.blob)
+        // }
+        // let mask = {
+        //   color: this.form.color,
+        //   image: images,
+        //   name: this.form.name,
+        //   price: this.form.price,
+        //   tags: this.form.tags,
+        //   vat: this.form.vat
+        // }
+        await this.addMask(this.form);
+        this.$router.push('/');
+      },
+      clearForm() {
         this.$v.$reset()
-        this.form.title = null
+        this.form.name = null
         this.form.price = null
         this.form.color = null
         this.form.tags = []
+        this.form.vat = false
+        this.recTags = ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
         this.form.image = null
       },
     },
@@ -147,24 +184,18 @@ import 'vue-swatches/dist/vue-swatches.css'
   }
 </script>
 <style lang="scss" scoped>
-#color-field{
-    justify-content: center;
+#color-field {
+  justify-content: center;
 }
-.form{
+
+.form {
   display: flex;
   justify-content: center;
-  margin-top:4px;
-  strong{
-    color:#004B78;
-  }
-  .vux-uploader{
+  margin-top: 4px;
+
+  .vux-uploader {
     width: 100%;
     padding: 0;
-    .vux-uploader_title{
-      color:#004B78 !important;
-    }
   }
 }
-
-
 </style>

@@ -21,12 +21,12 @@
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
   @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
-  @include md-register-theme("default", (
-      primary: #004B78, // The primary color of your brand
+  @include md-register-theme("default", (primary: #004B78, // The primary color of your brand
       accent: #F11A1A // The secondary color of your brand
     ));
 
   @import "~vue-material/dist/theme/all";
+  @import "./styles/_variables.scss";
 
   #app {
     font-family: Open Sans;
@@ -41,11 +41,11 @@
       &:nth-of-type(2) {
         margin-top: 10px;
 
-        color: #004B78;
+        color: $hp-blue;
         font-weight: bold;
 
         &:hover {
-          color: #F11A1A;
+          color: $hp-red;
         }
 
         &.router-link-active {

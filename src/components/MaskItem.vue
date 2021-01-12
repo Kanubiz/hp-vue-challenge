@@ -91,8 +91,6 @@ export default {
   @import "./../styles/_variables.scss";
 
   .mask {
-
-
       .primary {
           color: $hp-blue !important
       }
@@ -102,7 +100,7 @@ export default {
       }
 
       .md-card {
-          
+
           width: 302px;
           margin: 4px;
       }
@@ -126,11 +124,12 @@ export default {
                       span {
                           color: $hp-blue;
                       }
-                      .color-icon{
-                        -webkit-text-stroke-width: 1px;
-                        -webkit-text-stroke-color: #000;
-                        font-size: 30px !important;
-                        margin-left: 5px;
+
+                      .color-icon {
+                          -webkit-text-stroke-width: 1px;
+                          -webkit-text-stroke-color: #000;
+                          font-size: 30px !important;
+                          margin-left: 5px;
                       }
                   }
               }

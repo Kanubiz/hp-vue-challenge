@@ -10,7 +10,7 @@ const getters = {
 const actions = {
     async fetchMasks({
         commit
-    }, limit=10) {
+    }, limit = 10) {
         const response = await get()
         var masks = response.data.slice(0, limit)
         commit('setMasks', masks)
@@ -45,9 +45,9 @@ const mutations = {
     removeMask: (state, delMask) => (state.masks = state.masks.filter(mask => delMask._id !== mask._id)),
     updateMask: (state, updMask) => {
         const index = state.masks.findIndex(mask => mask._id === updMask._id);
-        if(index !== -1) {
+        if (index !== -1) {
             state.masks.splice(index, 1, updMask);
-        }     
+        }
     }
 };
 

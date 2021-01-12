@@ -7,7 +7,7 @@
           <div class="md-layout-item md-small-size-100">
             <md-field md-clearable :class="getValidationClass('name')">
               <label for="name">Name your Mask</label>
-              <md-input name="name" id="name" v-model="form.name"/>
+              <md-input name="name" id="name" v-model="form.name" />
               <span class="md-error" v-if="!$v.form.name.required">The name is required</span>
               <span class="md-error" v-else-if="!$v.form.name.minlength">Invalid name</span>
             </md-field>
@@ -19,7 +19,7 @@
             <md-field md-clearable :class="getValidationClass('price')">
               <label for="price">Price</label>
               <span class="md-prefix">€</span>
-              <md-input name="price" id="price" v-model="form.price"/>
+              <md-input name="price" id="price" v-model="form.price" />
               <span class="md-error" v-if="!$v.form.price.required">The price is required</span>
               <span class="md-error" v-else-if="!$v.form.price.minlength">Invalid price</span>
             </md-field>
@@ -49,14 +49,14 @@
           </div>
         </div>
 
-          <div class="md-layout-item md-small-size-100">
-            <md-field md-clearable :class="getValidationClass('image')">
-              <label for="image">Image link</label>
-              <md-input name="image" id="image" v-model="form.image"/>
-              <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
-              <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
-            </md-field>
-          </div>
+        <div class="md-layout-item md-small-size-100">
+          <md-field md-clearable :class="getValidationClass('image')">
+            <label for="image">Image link</label>
+            <md-input name="image" id="image" v-model="form.image" />
+            <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
+            <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
+          </md-field>
+        </div>
 
         <!-- <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-100">
@@ -81,23 +81,18 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { mapActions } from 'vuex';
-import VSwatches from 'vue-swatches'
+  import VSwatches from 'vue-swatches'
   // import Uploader from "vux-uploader-component";
-import 'vue-swatches/dist/vue-swatches.css'
-  import {
-    required,
-    minLength,
-    decimal,
-    url,
-    minValue
-  } from 'vuelidate/lib/validators'
+  import 'vue-swatches/dist/vue-swatches.css'
+  import {required, minLength, decimal, url, minValue} from 'vuelidate/lib/validators'
 
   export default {
     name: 'AddMask',
     mixins: [validationMixin],
-     components: { VSwatches, 
-    //  Uploader
-     },
+    components: {
+      VSwatches,
+      //  Uploader
+    },
     data: () => ({
       form: {
         name: null,
@@ -136,7 +131,7 @@ import 'vue-swatches/dist/vue-swatches.css'
     },
     methods: {
       ...mapActions(['addMask']),
-      getValidationClass (fieldName) {
+      getValidationClass(fieldName) {
         const field = this.$v.form[fieldName]
 
         if (field) {
@@ -145,8 +140,8 @@ import 'vue-swatches/dist/vue-swatches.css'
           }
         }
       },
-      addTag(tag){
-        if(!this.form.tags.filter(t => t === tag)[0]){
+      addTag(tag) {
+        if (!this.form.tags.filter(t => t === tag)[0]) {
           this.form.tags.push(tag)
           let removeIndex = this.recTags.findIndex(x => x === tag)
           this.recTags.splice(removeIndex, 1)
@@ -157,7 +152,7 @@ import 'vue-swatches/dist/vue-swatches.css'
         if (!this.$v.$invalid) {
           await this.uploadMask()
         }
-      },      
+      },
       async uploadMask() {
         // let images = []
         // for (let image of this.form.image) {
@@ -174,14 +169,14 @@ import 'vue-swatches/dist/vue-swatches.css'
         await this.addMask(this.form);
         this.$router.push('/');
       },
-      clearForm () {
+      clearForm() {
         this.$v.$reset()
         this.form.name = null
         this.form.price = null
         this.form.color = null
         this.form.tags = []
         this.form.vat = false
-        this.recTags= ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
+        this.recTags = ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
         this.form.image = null
       },
     },
@@ -189,19 +184,18 @@ import 'vue-swatches/dist/vue-swatches.css'
   }
 </script>
 <style lang="scss" scoped>
-#color-field{
-    justify-content: center;
+#color-field {
+  justify-content: center;
 }
-.form{
+
+.form {
   display: flex;
   justify-content: center;
-  margin-top:4px;
+  margin-top: 4px;
 
-  .vux-uploader{
+  .vux-uploader {
     width: 100%;
     padding: 0;
   }
 }
-
-
 </style>

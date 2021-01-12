@@ -1,8 +1,8 @@
 <template>
     <div v-if="allMasks.length>0">
-        <FilterMasks/>
+        <FilterMasks />
         <div class="masks">
-             <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask'/>
+            <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask' />
         </div>
     </div>
     <div v-else>
@@ -17,7 +17,10 @@
     
     export default {
         name: 'Masks',
-        components: {FilterMasks, MaskItem},
+        components: {
+            FilterMasks,
+            MaskItem
+        },
         computed: mapGetters(['allMasks']),
         methods: {
             ...mapActions(['fetchMasks']),

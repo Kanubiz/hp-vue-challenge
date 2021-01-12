@@ -32,6 +32,7 @@ const actions = {
     async updateMask({
         commit
     }, updMask) {
+        //TODO
         const cloneMask = JSON.parse(JSON.stringify(updMask));
         const id = cloneMask._id;
         delete cloneMask._id;
@@ -44,6 +45,7 @@ const mutations = {
     newMask: (state, mask) => state.masks.unshift(mask),
     removeMask: (state, delMask) => (state.masks = state.masks.filter(mask => delMask._id !== mask._id)),
     updateMask: (state, updMask) => {
+        //TODO
         const index = state.masks.findIndex(mask => mask._id === updMask._id);
         if (index !== -1) {
             state.masks.splice(index, 1, updMask);

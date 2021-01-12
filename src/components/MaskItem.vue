@@ -17,6 +17,7 @@
                         </md-button>
 
                         <md-menu-content>
+                            <!-- TODO -->
                             <md-menu-item :to="`/product-edit/${mask._id}`">
                                 <span>Edit</span>
                                 <md-icon class="md-primary">edit</md-icon>

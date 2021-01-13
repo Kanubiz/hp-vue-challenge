@@ -20,5 +20,5 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Crudcrud api Key
+To change to a new api key, you will need to change it in `src/services/api.js => const crucrud`

@@ -4,7 +4,10 @@ const state = {
 };
 
 const getters = {
-    allMasks: (state) => state.masks
+    allMasks: (state) => state.masks,
+    getMask: (state) => (id) => {
+        return state.masks.find(mask => mask._id === id)
+    },
 };
 
 const actions = {

@@ -1,13 +1,27 @@
 <template>
-    <div v-if="allMasks.length>0">
+    <div >
+    <!-- v-if="allMasks.length>0"> -->
         <FilterMasks />
         <div class="masks">
             <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask' />
         </div>
     </div>
-    <div v-else>
+    <!-- <div v-else>
         <a href="#" class="arrow up">Up</a>
-    </div>
+        <div class="no-masks">
+        <md-card  class="md-layout-item md-size-15 md-small-size-40">
+      <md-card-header>
+        <div class="md-title">No masks found!</div>
+      </md-card-header>
+
+      <md-card-content>
+        Click on the <b>Add a new mask</b> button to add masks to your collection!
+      </md-card-content>
+
+    </md-card>
+        </div>
+
+    </div> -->
 </template>
 
 <script>
@@ -52,7 +66,15 @@
           opacity: 0.9
       }
   }
-
+.no-masks {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  .md-card{
+      position: absolute;
+      top: 30%;
+  }
+}
 
   .arrow {
       border-color: transparent;
@@ -70,7 +92,7 @@
   }
 
   .up {
-      -webkit-animation: uparrow 0.6s infinite alternate ease-in-out;
+      animation: uparrow 0.6s infinite alternate ease-in-out;
       border-bottom: 2em solid $hp-blue;
   }
 

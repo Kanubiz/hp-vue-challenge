@@ -1,5 +1,10 @@
 <template>
     <div class="mask">
+        
+        <md-dialog-confirm :md-active.sync="showDeleteDialog" md-title="Hold up!"
+            md-content="You really want to delete this awesome mask?" md-confirm-text="Yes!" md-cancel-text="Nevermind!"
+            @md-cancel="showDeleteDialog = false" @md-confirm="deleteMask(mask)" />
+
         <md-card>
             <md-card-media>
                 <img :src="mask.image">
@@ -17,13 +22,12 @@
                         </md-button>
 
                         <md-menu-content>
-                            <!-- TODO -->
-                            <md-menu-item :to="`/product-edit/${mask._id}`">
+                            <md-menu-item :to="`/edit/${mask._id}`">
                                 <span>Edit</span>
                                 <md-icon class="md-primary">edit</md-icon>
                             </md-menu-item>
 
-                            <md-menu-item @click="deleteMask(mask)">
+                            <md-menu-item @click="showDeleteDialog = true">
                                 <span>Delete</span>
                                 <md-icon class="md-primary">delete</md-icon>
                             </md-menu-item>
@@ -79,6 +83,9 @@ export default {
             required: true
         },
     },
+    data:() => ({
+        showDeleteDialog: false
+    }),
     methods: {
         ...mapActions(['deleteMask']),
         formatDate(date) {
@@ -90,7 +97,9 @@ export default {
 
 <style lang="scss" scoped>
   @import "./../styles/_variables.scss";
-
+  .md-dialog /deep/.md-dialog-container {
+    max-width: 768px;
+  }
   .mask {
       .primary {
           color: $hp-blue !important

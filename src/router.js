@@ -15,6 +15,11 @@ export default new Router({
             path: '/add',
             name: 'AddMasks',
             component: AddMask
+        },
+        {
+            path: '/edit/:id',
+            name: 'AddMasks',
+            component: AddMask
         }
     ]
 })

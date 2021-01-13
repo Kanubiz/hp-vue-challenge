@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const crudcrud = "04383a2b9a124d439c5ac7a3ce6746db"
+const crudcrud = "3bf1175af02f4f26b4817524e89b56e9"
 const url = `https://crudcrud.com/api/${crudcrud}/masks`;
 
 const get = async function () {
@@ -19,9 +19,4 @@ const del = async function (id) {
     return await axios.delete(`${url}/${id}`);
 }
 
-export {
-    get,
-    post,
-    put,
-    del
-};
+export {get, post, put, del};

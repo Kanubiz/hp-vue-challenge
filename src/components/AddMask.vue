@@ -80,7 +80,7 @@
 
 <script>
   import { validationMixin } from 'vuelidate'
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import VSwatches from 'vue-swatches'
   // import Uploader from "vux-uploader-component";
   import 'vue-swatches/dist/vue-swatches.css'
@@ -94,6 +94,7 @@
       //  Uploader
     },
     data: () => ({
+      editing: false,
       form: {
         name: null,
         price: null,
@@ -129,8 +130,9 @@
         }
       }
     },
+    computed: mapGetters(['getMask']),
     methods: {
-      ...mapActions(['addMask']),
+      ...mapActions(['addMask', 'updateMask']),
       getValidationClass(fieldName) {
         const field = this.$v.form[fieldName]
 
@@ -166,8 +168,9 @@
         //   tags: this.form.tags,
         //   vat: this.form.vat
         // }
-        await this.addMask(this.form);
-        this.$router.push('/');
+        
+        await this.editing ? this.updateMask(this.form) : this.addMask(this.form)
+        this.$router.push('/')
       },
       clearForm() {
         this.$v.$reset()
@@ -178,8 +181,16 @@
         this.form.vat = false
         this.recTags = ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
         this.form.image = null
-      },
+      }
     },
+    created(){
+        const maskId = this.$route.params.id
+        if (maskId) {
+          let mask = this.getMask(maskId)
+          this.editing = true
+          this.form = mask;
+        }
+      }
 
   }
 </script>

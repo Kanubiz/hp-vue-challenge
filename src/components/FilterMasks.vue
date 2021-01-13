@@ -15,7 +15,7 @@
             <div class="md-layout-item">
                 <md-field id='number-field'>
                     <label for="number">Show:</label>
-                    <md-select v-model="limit" name="number" id="number" @md-selected="fetchMasks(limit)">
+                    <md-select v-model="limit" name="number" id="number" @md-selected="allMasks">
                         <md-option v-for="number in limits" :key="number" :value="number">{{number}}</md-option>
                     </md-select>
                 </md-field>
@@ -25,10 +25,10 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapGetters} from 'vuex'
     export default {
         name: 'FilterMasks',
-        methods: mapActions(['fetchMasks']),
+        methods: mapGetters(['allMasks']),
         data: () => ({
             limit: '10',
             limits: [10, 5, 3, 2, 1],

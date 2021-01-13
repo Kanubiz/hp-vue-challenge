@@ -1,25 +1,25 @@
 <template>
-    <div >
+    <div>
         <FilterMasks />
         <div class="masks" v-if="allMasks.length>0">
             <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask' />
         </div>
-    <div v-else>
-        <a href="#" class="arrow up">Up</a>
-        <div class="no-masks">
-        <md-card  class="md-layout-item md-size-15 md-small-size-40">
-      <md-card-header>
-        <div class="md-title">No masks found!</div>
-      </md-card-header>
+        <div v-else>
+            <a href="#" class="arrow up">Up</a>
+            <div class="no-masks">
+                <md-card class="md-layout-item md-size-15 md-small-size-40">
+                    <md-card-header>
+                        <div class="md-title">No masks found!</div>
+                    </md-card-header>
 
-      <md-card-content>
-        Click on the <b>Add a new mask</b> button to add masks to your collection!
-      </md-card-content>
+                    <md-card-content>
+                        Click on the <b>Add a new mask</b> button to add masks to your collection!
+                    </md-card-content>
 
-    </md-card>
+                </md-card>
+            </div>
+
         </div>
-
-    </div>
     </div>
 </template>
 
@@ -65,15 +65,17 @@
           opacity: 0.9
       }
   }
-.no-masks {
-  display: flex;
-  justify-content: center;
-  margin-top: 4px;
-  .md-card{
-      position: absolute;
-      top: 30%;
+
+  .no-masks {
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+
+      .md-card {
+          position: absolute;
+          top: 30%;
+      }
   }
-}
 
   .arrow {
       border-color: transparent;

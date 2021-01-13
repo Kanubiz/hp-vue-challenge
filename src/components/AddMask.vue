@@ -168,7 +168,7 @@
         //   tags: this.form.tags,
         //   vat: this.form.vat
         // }
-        
+
         await this.editing ? this.updateMask(this.form) : this.addMask(this.form)
         this.$router.push('/')
       },
@@ -183,14 +183,14 @@
         this.form.image = null
       }
     },
-    created(){
-        const maskId = this.$route.params.id
-        if (maskId) {
-          let mask = this.getMask(maskId)
-          this.editing = true
-          this.form = mask;
-        }
+    created() {
+      const maskId = this.$route.params.id
+      if (maskId) {
+        let mask = this.getMask(maskId)
+        this.editing = true
+        this.form = mask;
       }
+    }
 
   }
 </script>

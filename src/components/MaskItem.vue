@@ -97,9 +97,11 @@ export default {
 
 <style lang="scss" scoped>
   @import "./../styles/_variables.scss";
+
   .md-dialog /deep/.md-dialog-container {
-    max-width: 768px;
+      max-width: 768px;
   }
+
   .mask {
       .primary {
           color: $hp-blue !important

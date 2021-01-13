@@ -33,7 +33,7 @@ const actions = {
                 return 0;
             })
 
-            masks = filter.tags.length>0?masks.filter(mask => mask.tags.some(r => filter.tags.includes(r))):masks
+            masks = filter.tags.length > 0 ? masks.filter(mask => mask.tags.some(r => filter.tags.includes(r))) : masks
         }
         commit('setMasks', masks)
     },

@@ -20,13 +20,13 @@
   @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
   @import "~vue-material/dist/theme/engine"; // Import the theme engine
-
-  @include md-register-theme("default", (primary: #004B78, // The primary color of your brand
-      accent: #F11A1A // The secondary color of your brand
+  @import "./styles/_variables.scss";
+  @include md-register-theme("default", (primary: $hp-blue, // The primary color of your brand
+      accent: $hp-red // The secondary color of your brand
     ));
 
   @import "~vue-material/dist/theme/all";
-  @import "./styles/_variables.scss";
+
 
   #app {
     font-family: Open Sans;

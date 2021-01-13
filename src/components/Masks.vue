@@ -49,9 +49,10 @@
 
   .masks {
       display: grid;
+      justify-items: center;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       grid-gap: 1rem;
-      margin-left: 2%;
+      margin: 0 1rem
   }
 
   @keyframes uparrow {

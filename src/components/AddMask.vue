@@ -56,8 +56,9 @@
             <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
             <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
           </md-field>
+          
         </div>
-
+        <img v-if="form.image" class="preview" :src="form.image" alt="">
         <!-- <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-100">
             <md-field>
@@ -203,10 +204,15 @@
   display: flex;
   justify-content: center;
   margin-top: 4px;
-
-  .vux-uploader {
-    width: 100%;
-    padding: 0;
+  .preview{
+    width: 302px;
+    height: 302px;
+    border: 1px solid grey;
+    border-radius: 10px;
   }
+  // .vux-uploader {
+  //   width: 100%;
+  //   padding: 0;
+  // }
 }
 </style>

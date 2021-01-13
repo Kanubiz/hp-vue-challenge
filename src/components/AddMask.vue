@@ -56,8 +56,9 @@
             <span class="md-error" v-if="!$v.form.image.required">The immage is required</span>
             <span class="md-error" v-else-if="!$v.form.image.minlength">Invalid url</span>
           </md-field>
+          
         </div>
-
+        <img v-if="form.image" class="preview" :src="form.image" alt="">
         <!-- <div class="md-layout md-gutter">
           <div class="md-layout-item md-size-100">
             <md-field>
@@ -80,7 +81,7 @@
 
 <script>
   import { validationMixin } from 'vuelidate'
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import VSwatches from 'vue-swatches'
   // import Uploader from "vux-uploader-component";
   import 'vue-swatches/dist/vue-swatches.css'
@@ -94,6 +95,7 @@
       //  Uploader
     },
     data: () => ({
+      editing: false,
       form: {
         name: null,
         price: null,
@@ -129,8 +131,9 @@
         }
       }
     },
+    computed: mapGetters(['getMask']),
     methods: {
-      ...mapActions(['addMask']),
+      ...mapActions(['addMask', 'updateMask']),
       getValidationClass(fieldName) {
         const field = this.$v.form[fieldName]
 
@@ -141,8 +144,8 @@
         }
       },
       addTag(tag) {
-        if (!this.form.tags.filter(t => t === tag)[0]) {
-          this.form.tags.push(tag)
+        if (!this.form.tags.filter(t => t.toUpperCase() === tag.toUpperCase())[0]) {
+          this.form.tags.push(tag.replace(/^\w/, (c) => c.toUpperCase()))
           let removeIndex = this.recTags.findIndex(x => x === tag)
           this.recTags.splice(removeIndex, 1)
         }
@@ -166,8 +169,9 @@
         //   tags: this.form.tags,
         //   vat: this.form.vat
         // }
-        await this.addMask(this.form);
-        this.$router.push('/');
+
+        await this.editing ? this.updateMask(this.form) : this.addMask(this.form)
+        this.$router.push('/')
       },
       clearForm() {
         this.$v.$reset()
@@ -178,8 +182,16 @@
         this.form.vat = false
         this.recTags = ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
         this.form.image = null
-      },
+      }
     },
+    created() {
+      const maskId = this.$route.params.id
+      if (maskId) {
+        let mask = this.getMask(maskId)
+        this.editing = true
+        this.form = mask;
+      }
+    }
 
   }
 </script>
@@ -192,10 +204,15 @@
   display: flex;
   justify-content: center;
   margin-top: 4px;
-
-  .vux-uploader {
-    width: 100%;
-    padding: 0;
+  .preview{
+    width: 302px;
+    height: 302px;
+    border: 1px solid grey;
+    border-radius: 10px;
   }
+  // .vux-uploader {
+  //   width: 100%;
+  //   padding: 0;
+  // }
 }
 </style>

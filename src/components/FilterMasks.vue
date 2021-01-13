@@ -4,18 +4,28 @@
             <div class="md-layout-item">
                 <md-field id="filter-field">
                     <label for="filter">Filter by:</label>
-                    <md-select v-model="filter" name="filter" id="filter" placeholder="Filter by">
-                        <md-option value="australia">Australia</md-option>
-                        <md-option value="brazil">Brazil</md-option>
-                        <md-option value="japan">Japan</md-option>
-                        <md-option value="united-states">United States</md-option>
+                    <md-select v-model="filter.filterBy" name="filter" id="filter" placeholder="Filter by"
+                        @md-selected="filterMasks">
+                        <md-option value="" v-if="filter.filterBy"></md-option>
+                        <md-option v-for="filterVal in filters" :key="filterVal" :value="filterVal.toLowerCase()">
+                            {{filterVal}}</md-option>
+                    </md-select>
+                </md-field>
+            </div>
+            <div class="md-layout-item">
+                <md-field id="filter-field">
+                    <label for="tags">Tags:</label>
+                    <md-select v-model="filter.tags" name="tags" id="tags" placeholder="Tags" @md-selected="filterMasks"
+                        multiple>
+                        <md-option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</md-option>
                     </md-select>
                 </md-field>
             </div>
             <div class="md-layout-item">
                 <md-field id='number-field'>
                     <label for="number">Show:</label>
-                    <md-select v-model="limit" name="number" id="number" @md-selected="fetchMasks(limit)">
+                    <md-select v-model="filter.limit" name="number" id="number" @md-selected="filterMasks">
+                        <md-option value="" v-if="filter.limit">All</md-option>
                         <md-option v-for="number in limits" :key="number" :value="number">{{number}}</md-option>
                     </md-select>
                 </md-field>
@@ -28,12 +38,23 @@
     import {mapActions} from 'vuex'
     export default {
         name: 'FilterMasks',
-        methods: mapActions(['fetchMasks']),
         data: () => ({
-            limit: '10',
+            filter: {
+                limit: null,
+                filterBy: '',
+                tags: []
+            },
             limits: [10, 5, 3, 2, 1],
-            filter: null
-        })
+            filters: ["Name", "Price", "Date"],
+            tags: ["Microfiber", "Light", "Polyester", "Double Layer", "Closed", "Triple Layer", "For Kids"]
+        }),
+        methods: {
+            ...mapActions(['fetchMasks']),
+            filterMasks() {
+                this.fetchMasks(this.filter)
+            }
+        }
+
     }
 </script>
 

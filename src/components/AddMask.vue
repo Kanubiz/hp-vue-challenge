@@ -143,8 +143,8 @@
         }
       },
       addTag(tag) {
-        if (!this.form.tags.filter(t => t === tag)[0]) {
-          this.form.tags.push(tag)
+        if (!this.form.tags.filter(t => t.toUpperCase() === tag.toUpperCase())[0]) {
+          this.form.tags.push(tag.replace(/^\w/, (c) => c.toUpperCase()))
           let removeIndex = this.recTags.findIndex(x => x === tag)
           this.recTags.splice(removeIndex, 1)
         }

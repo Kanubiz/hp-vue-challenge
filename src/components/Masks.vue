@@ -1,12 +1,10 @@
 <template>
     <div >
-    <!-- v-if="allMasks.length>0"> -->
         <FilterMasks />
-        <div class="masks">
+        <div class="masks" v-if="allMasks.length>0">
             <MaskItem v-for="mask in allMasks" :key="mask._id" :mask='mask' />
         </div>
-    </div>
-    <!-- <div v-else>
+    <div v-else>
         <a href="#" class="arrow up">Up</a>
         <div class="no-masks">
         <md-card  class="md-layout-item md-size-15 md-small-size-40">
@@ -21,7 +19,8 @@
     </md-card>
         </div>
 
-    </div> -->
+    </div>
+    </div>
 </template>
 
 <script>

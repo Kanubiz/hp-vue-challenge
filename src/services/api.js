@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const crudcrud = "3bf1175af02f4f26b4817524e89b56e9"
+const crudcrud = "8e6c40651b25416bb4d455996871e904"
 const url = `https://crudcrud.com/api/${crudcrud}/masks`;
 
 const get = async function () {

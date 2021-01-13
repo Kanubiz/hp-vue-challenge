@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <md-toolbar md-elevation="1">
-      <router-link class="nav-item" to="/"><img alt="helloprint" src="./assets/hp.svg"></router-link>
-      <router-link class="nav-item" to="/add">Add a new mask</router-link>
-    </md-toolbar>
+    <Toolbar/>
     <md-content class="md-transparent">
       <router-view />
     </md-content>
@@ -11,8 +8,13 @@
 </template>
 
 <script>
+  import Toolbar from './components/Toolbar.vue'
   export default {
-    name: 'App'
+
+    name: 'App',
+    components: {
+      Toolbar
+    },
   }
 </script>
 
@@ -27,32 +29,9 @@
 
   @import "~vue-material/dist/theme/all";
 
-
   #app {
     font-family: Open Sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    .nav-item {
-      &:nth-of-type(1) {
-        margin-right: 20px;
-      }
-
-      &:nth-of-type(2) {
-        margin-top: 10px;
-
-        color: $hp-blue;
-        font-weight: bold;
-
-        &:hover {
-          color: $hp-red;
-        }
-
-        &.router-link-active {
-          display: none;
-        }
-      }
-
-    }
   }
 </style>
